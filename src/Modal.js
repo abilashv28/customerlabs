@@ -26,7 +26,8 @@ const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, seg
 
       const fetchData = async () => {
         try {
-          const response = await axios.post('https://webhook.site/711737ce-7f49-4f15-af27-2daa7f873f17', data);
+          const postUrl = 'https://webhook.site/711737ce-7f49-4f15-af27-2daa7f873f17';
+          const response = await axios.post(postUrl, data);
           console.log('Response:', response.data);
           setsentstatus(response.data);
           setTimeout(() => {
