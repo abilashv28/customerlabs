@@ -31,7 +31,7 @@ const App = () => {
   const deleteSelectedOption = useCallback((val) => {
     setSelectedOptions(prevOptions => prevOptions.filter(option => option.value !== val));
     setOptions((option) => [...option, ...(initialOptions.filter(op => op.value === val))]);
-  }, [initialOptions]);
+  }, []);
 
 
   const handleAddNewSchema = useCallback(() => {
@@ -60,7 +60,7 @@ const App = () => {
       <nav className="navbar navbar-inverse navbar-fixed-top" style={{backgroundColor:"#23cce1"}}>
       <div className="container-fluid">
         <div className="navbar-header">
-          <a className="navbar-brand" href="#" style={{color:"white"}}>View Segments</a>
+          <a className="navbar-brand" href="http://localhost:3000/customerlabs" style={{color:"white"}}>View Segments</a>
         </div>
         <ul className="nav navbar-nav">
         </ul>

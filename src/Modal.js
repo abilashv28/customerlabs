@@ -4,7 +4,7 @@ import NewSchema from './NewSchema';
 import axios from 'axios';
 
 const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, segmentName, selectedOptions, options, newOption, setSegmentName, handleAddNewSchema, deleteSelectedOption, newOptions, setNewOption }) => {
-  const [segmentstatus, setSegmentStatus] = useState('');
+  const [segmentValue, setSegmentValue] = useState('');
   const [selectedstatus, setSelectedStatus] = useState('');
   const [sentstatus, setsentstatus] = useState('');
   
@@ -13,7 +13,7 @@ const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, seg
     document.getElementById('myModal').style.backdropFilter = 'blur(0px)';
   }, []);
 
-  const handleSaveSegment = useCallback(() => {
+  const saveSegmentHandle = useCallback(() => {
     if (segmentName !== '' && selectedOptions.length !== 0) {
       const data = {
         segmentName,
@@ -26,16 +26,20 @@ const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, seg
 
       const fetchData = async () => {
         try {
-          const postUrl = 'https://webhook.site/711737ce-7f49-4f15-af27-2daa7f873f17';
-          const response = await axios.post(postUrl, data);
+          const apiUrl = 'https://webhook.site/d4644ef7-a25a-4e03-b925-bf3d05fc0de0';
+          const response = await axios.post(apiUrl, data, {
+            crossDomain: true,
+          });
           console.log('Response:', response.data);
           setsentstatus(response.data);
+        
           setTimeout(() => {
             setsentstatus('');
           }, 1800);
         } catch (error) {
-          console.error('Error fetching data:', error);
+          console.error('Error:', error);
         }
+        
       };
       fetchData();
       setResults(prev => [...prev, data_type]);
@@ -45,9 +49,9 @@ const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, seg
       setOptions(initialOptions);
     } else {
       if (segmentName === '') {
-        setSegmentStatus('*Enter Segment Name');
+        setSegmentValue('*Enter Segment Name');
         setTimeout(() => {
-          setSegmentStatus('');
+          setSegmentValue('');
         }, 1800);
       }
       if (selectedOptions.length === 0) {
@@ -78,7 +82,7 @@ const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, seg
         value={segmentName}
         onChange={event => setSegmentName(event.target.value)}
       />
-      <div className='status'>{segmentstatus}</div>
+      <div className='status'>{segmentValue}</div>
     
     <br />
     <span className='pb-6'>
@@ -105,7 +109,7 @@ const Modal = ({ setResults, initialOptions, setOptions, setSelectedOptions, seg
       <div className='status'>{selectedstatus}</div>
       <div className='sentstatus' style={{color: "#26a126"}}>{sentstatus}</div>
       <label className='newschemalabl' onClick={handleAddNewSchema}>+ Add new schema</label>
-    <button className='bottom-btn btn' id='save' onClick={handleSaveSegment}>Save the Segment</button>        <button className='bottom-btn cancel btn' id='cancel' onClick={()=>{document.getElementById("myModal").style.display="none";document.getElementById("myModal").style.backdropFilter="blur(0px)";}} >Cancel</button>
+    <button className='bottom-btn btn' id='save' onClick={saveSegmentHandle}>Save the Segment</button>        <button className='bottom-btn cancel btn' id='cancel' onClick={()=>{document.getElementById("myModal").style.display="none";document.getElementById("myModal").style.backdropFilter="blur(0px)";}} >Cancel</button>
     </div>
     </div>
   </div>
